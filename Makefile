@@ -3,6 +3,6 @@ vm: frk.c
 
 .PHONY: run clean
 run:
-	./vm addresses.txt lru fifo
+	./vm addresses.txt fifo fifo
 clean:
 	rm vm
