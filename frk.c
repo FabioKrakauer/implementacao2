@@ -47,6 +47,7 @@ frame_t frames[MEMORY_SIZE];
 lruFrame_t lruMemory[MEMORY_SIZE];
 
 FILE * correctFile;
+FILE * bs;
 
 // Declara funções
 void clearStructs();
@@ -79,7 +80,11 @@ int main(int argc, char **argv) {
         printf("ERROR TO OPEN file %s!", fileName);
         return 0;
     }
-
+    bs = fopen("BACKING_STORE.bin", "r");
+    if(bs == NULL) {
+        printf("Error on open file BACKING STORE");
+        return 0;
+    }
     char n[100];
     //Numero de enderecos que serão lidos!
     while(fgets(n, 60, file) != NULL) {
@@ -116,11 +121,6 @@ void checkValue(int address, int page, int offset, int lruFrame) {
     }
 }
 int findInBackStore(int page, int offset, int vA, int lruFrame) {
-    FILE *bs = fopen("BACKING_STORE.bin", "r");
-    if(bs == NULL) {
-        printf("Error on open file BACKING STORE");
-        return 0;
-    }
     long startAt = page * PAGE_SIZE;
     frame_t *f = (frame_t*)malloc(sizeof(frame_t));
     f->using = VALID_STATUS;
@@ -142,9 +142,7 @@ int findInBackStore(int page, int offset, int vA, int lruFrame) {
     pt->frame = f;
     pt->status = VALID_STATUS;
     if(oldPageFromFrame > -1) {
-        pageTable_t old = pageTable[oldPageFromFrame];
-        old.status = INVALID_STATUS;
-        pageTable[oldPageFromFrame] = old;
+        pageTable[oldPageFromFrame].status = INVALID_STATUS;
     }
     pageTable[page] = *pt;
 
