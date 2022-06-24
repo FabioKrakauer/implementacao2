@@ -1001,3 +1001,5 @@ Virtual address: 12107 Physical address: 6475 Value: -46
 Number of Translated Addresses = 1000
 Page Faults = 538
 Page Fault Rate = 0.538
+TLB Hits = 55
+TLB Hits Rate = 0.055
