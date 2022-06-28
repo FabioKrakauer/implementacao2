@@ -88,6 +88,15 @@ int main(int argc, char **argv) {
     fileName = argv[1];
     subFrame = argv[2];
     subTLB = argv[3]; 
+
+    if(strcmp(subFrame, "lru") && strcmp(subFrame, "fifo")) {
+        printf("Frame must be lru or fifo");
+        return 0;
+    }
+    if(strcmp(subTLB, "lru") && strcmp(subTLB, "fifo")) {
+        printf("TLB must be lru or fifo");
+        return 0;
+    }
     //Clear all indexes
     clearStructs();
 
@@ -121,7 +130,7 @@ int main(int argc, char **argv) {
     fprintf(correctFile, "Page Faults = %d\n", totalPageFault);
     fprintf(correctFile, "Page Fault Rate = %.3f\n", pageFaultRate);
     fprintf(correctFile, "TLB Hits = %d\n", tlbHits);
-    fprintf(correctFile, "TLB Hits Rate = %.3f\n", tlbHitsRate);
+    fprintf(correctFile, "TLB Hit Rate = %.3f\n", tlbHitsRate);
     
     fclose(correctFile);
     fclose(file);
